@@ -1,0 +1,4 @@
+creds = {}
+
+
+from .slacklogger import *
