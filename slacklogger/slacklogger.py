@@ -69,8 +69,7 @@ def log(
                 "channel": channel_id,
                 "blocks": json.dumps(blocks),
             }
-            r = requests.post(slack_endpoint, headers=headers, params=params)
-            print(r.text)
+            requests.post(slack_endpoint, headers=headers, params=params)
             return f(*args, **kwargs)
 
         return wrapper

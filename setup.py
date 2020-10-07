@@ -11,7 +11,7 @@ setup(
     description="Application-level event tracking with Slack",
     long_description=README,
     long_description_content_type="text/markdown",
-    author="Aleks",
+    author="Aleks Smechov",
     author_email="aleks@extractorapi.com",
     license="MIT",
     classifiers=[
