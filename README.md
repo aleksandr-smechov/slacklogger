@@ -148,7 +148,7 @@ def new_user(name: str):
     func_name, script_path = my_details(new_user) 
     slacklogger.send_log(
         message=f"Created new user: {name}",
-        leve="info",
+        level="info",
         tags=["#new_user", "#users"]
         function_name=func_name,
         script_path=script_path,
