@@ -7,14 +7,14 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name="simple-slacklogger",
-    version="0.0.2",
+    version="0.0.3",
     description="Application-level event tracking with Slack",
     long_description=README,
     long_description_content_type="text/markdown",
     author="Aleks Smechov",
     author_email="aleks@extractorapi.com",
     license="MIT",
-    homepage="https://github.com/aleksandr-smechov/slacklogger",
+    url="https://github.com/aleksandr-smechov/slacklogger",
     classifiers=[
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",

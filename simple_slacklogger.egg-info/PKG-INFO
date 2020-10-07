@@ -1,8 +1,8 @@
 Metadata-Version: 2.1
 Name: simple-slacklogger
-Version: 0.0.2
+Version: 0.0.3
 Summary: Application-level event tracking with Slack
-Home-page: UNKNOWN
+Home-page: https://github.com/aleksandr-smechov/slacklogger
 Author: Aleks Smechov
 Author-email: aleks@extractorapi.com
 License: MIT
