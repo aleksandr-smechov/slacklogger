@@ -1,13 +1,11 @@
-import inspect
-import json
 import os
-
+import json
 import pytz
+import inspect
 import requests
 from functools import wraps
 from datetime import datetime
 from pytz import UnknownTimeZoneError
-from .slacklogger_settings import DATE_FORMAT, LEVEL_COLORS
 
 
 def log(
@@ -19,7 +17,7 @@ def log(
     def decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):
-            from . import creds
+            from . import creds, settings
 
             if "channel_id" not in creds:
                 raise Exception(
@@ -32,6 +30,10 @@ def log(
 
             channel_id = creds["channel_id"]
             access_token = creds["access_token"]
+
+            date_format = settings["date_format"]
+            level_colors = settings["level_colors"]
+            level_color = level_colors.get(level, "default")
 
             now = pytz.utc.localize(datetime.utcnow())
             if timezone:
@@ -47,12 +49,18 @@ def log(
                         """
                     )
 
-            level_color = LEVEL_COLORS.get(level, "default")
             function_name = f.__name__
             script_path = os.path.abspath(inspect.getfile(f))
 
             blocks = construct_slack_blocks(
-                message, level, level_color, now, function_name, script_path, tags
+                message,
+                level,
+                date_format,
+                level_color,
+                now,
+                function_name,
+                script_path,
+                tags,
             )
 
             slack_endpoint = "https://slack.com/api/chat.postMessage"
@@ -60,10 +68,9 @@ def log(
             params = {
                 "channel": channel_id,
                 "blocks": json.dumps(blocks),
-                "use_user": "false",
             }
-            requests.post(slack_endpoint, headers=headers, params=params)
-
+            r = requests.post(slack_endpoint, headers=headers, params=params)
+            print(r.text)
             return f(*args, **kwargs)
 
         return wrapper
@@ -79,7 +86,7 @@ def send_log(
     script_path: str = "",
     timezone: str = "",
 ):
-    from . import creds
+    from . import creds, settings
 
     if "channel_id" not in creds:
         raise Exception("You need include a Slack channel ID in your creds dictionary")
@@ -90,6 +97,10 @@ def send_log(
 
     channel_id = creds["channel_id"]
     access_token = creds["access_token"]
+
+    date_format = settings["date_format"]
+    level_colors = settings["level_colors"]
+    level_color = level_colors.get(level, "default")
 
     now = pytz.utc.localize(datetime.utcnow())
     if timezone:
@@ -105,9 +116,8 @@ def send_log(
                 """
             )
 
-    level_color = LEVEL_COLORS.get(level, "default")
     blocks = construct_slack_blocks(
-        message, level, level_color, now, function_name, script_path, tags
+        message, level, date_format, level_color, now, function_name, script_path, tags
     )
 
     slack_endpoint = "https://slack.com/api/chat.postMessage"
@@ -115,7 +125,6 @@ def send_log(
     params = {
         "channel": channel_id,
         "blocks": json.dumps(blocks),
-        "use_user": "false",
     }
     r = requests.post(slack_endpoint, headers=headers, params=params)
 
@@ -125,6 +134,7 @@ def send_log(
 def construct_slack_blocks(
     message: str,
     level: str,
+    date_format: str,
     level_color: str,
     now: datetime,
     function_name: str,
@@ -134,7 +144,7 @@ def construct_slack_blocks(
     blocks = [
         {
             "type": "header",
-            "text": {"type": "plain_text", "text": f"{now.strftime(DATE_FORMAT)}"},
+            "text": {"type": "plain_text", "text": f"{now.strftime(date_format)}"},
         },
         {
             "type": "section",
