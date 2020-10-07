@@ -8,6 +8,14 @@ package includes a function decorator, a regular
 function, and some settings to play around with. 
 Here's how everything works.
 
+# Installation
+
+To install `slacklogger`, use pip.
+
+```
+pip install simple-slacklogger
+```
+
 # Getting Started
 
 To start using `slacklogger` you'll need to create
@@ -79,7 +87,7 @@ from slacklogger.helpers import my_details
 def new_user(name: str):
     print("Creating new user...")
     func_name, script_path = my_details(new_user) 
-    slackloger.send_log(
+    slacklogger.send_log(
         message=f"Created new user: {name}",
         function_name=func_name,
         script_path=script_path
@@ -101,7 +109,7 @@ class User:
     def new_user(self, name: str):
         print("Creating new user...")
         func_name, script_path = my_details(self.new_user) # <= add 'self'
-        slackloger.send_log(
+        slacklogger.send_log(
             message=f"Created new user: {name}",
             function_name=func_name,
             script_path=script_path
@@ -138,7 +146,7 @@ The regular function has the same options, along with
 def new_user(name: str):
     print("Creating new user...")
     func_name, script_path = my_details(new_user) 
-    slackloger.send_log(
+    slacklogger.send_log(
         message=f"Created new user: {name}",
         leve="info",
         tags=["#new_user", "#users"]

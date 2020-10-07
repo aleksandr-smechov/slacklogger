@@ -1,0 +1,11 @@
+README.md
+setup.cfg
+setup.py
+simple_slacklogger.egg-info/PKG-INFO
+simple_slacklogger.egg-info/SOURCES.txt
+simple_slacklogger.egg-info/dependency_links.txt
+simple_slacklogger.egg-info/requires.txt
+simple_slacklogger.egg-info/top_level.txt
+slacklogger/__init__.py
+slacklogger/helpers.py
+slacklogger/slacklogger.py
