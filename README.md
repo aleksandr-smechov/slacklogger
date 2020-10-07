@@ -236,7 +236,7 @@ parameter in either the decorator or the function.
 for relevant timezone names.
 
 ```
-def timezone_test(name: str):
+def timezone_test():
     print("Testing new timezone...")
     slacklogger.send_log(
         message="Testing Timezone",
